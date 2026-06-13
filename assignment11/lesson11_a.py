@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+#11.1 Plotting with Pandas
 # Load a dataset
 data = {
     "Month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
@@ -16,3 +17,4 @@ plt.show()
 # Bar Plot
 df.plot(x="Month", y="Sales", kind="bar", color="skyblue", title="Monthly Sales")
 plt.show()
+
