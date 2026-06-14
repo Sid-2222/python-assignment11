@@ -23,9 +23,11 @@ try:
 
 except sqlite3.Error as e:
     print("Database error:", e)
+    exit()
 
 except Exception as e:
     print("Error:", e)
+    exit()
     
 plt.figure(figsize=(10, 6))
 plt.bar(employee_results["last_name"], employee_results["revenue"], color="steelblue",edgecolor="black",linewidth=0.8)
