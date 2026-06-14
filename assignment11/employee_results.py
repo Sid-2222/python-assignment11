@@ -2,6 +2,7 @@ import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
 
+#Task 1: Plotting with Pandas
 DB_PATH = "../db/lesson.db"
 
 query = """
@@ -15,7 +16,7 @@ query = """
 
 try:
     with sqlite3.connect(DB_PATH) as conn:
-        print("Connected successfully")
+        print("Database Connected successfully")
 
         employee_results = pd.read_sql_query(query, conn)
 
