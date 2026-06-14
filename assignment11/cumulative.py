@@ -1,6 +1,10 @@
 import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.data as pldata
+import webbrowser
+import os
 
 #Task 2: A Line Plot with Pandas
 DB_PATH = "../db/lesson.db"
@@ -32,7 +36,6 @@ except Exception as e:
     exit()
     
 df["cumulative"] = df["total_price"].cumsum()
-print(df.tail())
 
 plt.figure(figsize=(10, 6))
 plt.plot(df["order_id"], df["cumulative"], color="steelblue", linewidth=2)
@@ -43,3 +46,34 @@ plt.grid(True, linestyle="--", alpha=0.5)
 plt.tight_layout()
 
 plt.show()
+
+# Task 3: Interactive Visualizations with Plotly
+df = pldata.wind(return_type='pandas')
+print("First 10 lines of the DataFrame.")
+print(df.head(10))
+print("Last 10 lines of the DataFrame.")
+print(df.tail(10))
+
+# cleaning data
+
+df["strength"] = df["strength"].str.replace(r"[^\d.]", "", regex=True)
+df["strength"] = pd.to_numeric(df["strength"], errors="coerce")
+df["frequency"] = pd.to_numeric(df["frequency"], errors="coerce")
+df = df.dropna(subset=["strength", "frequency", "direction"])
+
+fig = px.scatter(
+    df,
+    x="strength",
+    y="frequency",
+    color="direction",
+    title="Wind Strength vs Frequency",
+    labels={
+        "strength": "Wind Strength",
+        "frequency": "Frequency"
+    }
+)
+
+fig.write_html("wind.html", auto_open=False)
+webbrowser.open("file://" + os.path.abspath("wind.html"))
+
+
